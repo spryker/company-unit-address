@@ -10,7 +10,7 @@ namespace Spryker\Zed\CompanyUnitAddress\Business\Model;
 use Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 
-interface CompanyUnitAddressWriterInterface
+interface CompanyUnitAddressInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
@@ -32,22 +32,4 @@ interface CompanyUnitAddressWriterInterface
      * @return void
      */
     public function delete(CompanyUnitAddressTransfer $companyUnitAddressTransfer): void;
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
-     */
-    public function createCompanyUnitAddressAndUpdateBusinessUnitDefaultAddresses(
-        CompanyUnitAddressTransfer $companyUnitAddressTransfer
-    ): CompanyUnitAddressResponseTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
-     */
-    public function updateCompanyUnitAddressAndBusinessUnitDefaultAddresses(
-        CompanyUnitAddressTransfer $companyUnitAddressTransfer
-    ): CompanyUnitAddressResponseTransfer;
 }

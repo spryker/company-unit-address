@@ -9,7 +9,7 @@ namespace Spryker\Zed\CompanyUnitAddress\Persistence;
 
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 
-interface CompanyUnitAddressWriterRepositoryInterface
+interface CompanyUnitAddressEntityManagerInterface
 {
     /**
      * Specification:
@@ -23,18 +23,33 @@ interface CompanyUnitAddressWriterRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
      */
-    public function save(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressTransfer;
+    public function saveCompanyUnitAddress(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressTransfer;
 
     /**
      * Specification:
-     * - Finds a company unit address by CompanyUnitAddressTransfer::idCompanyUnitAddress in the transfer
-     * - Deletes the company unit address
+     * - Deletes the company unit address by idCompanyUnitAddress
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
+     * @param int $idCompanyUnitAddress
      *
      * @return void
      */
-    public function delete(CompanyUnitAddressTransfer $companyUnitAddressTransfer): void;
+    public function deleteCompanyUnitAddressById(int $idCompanyUnitAddress): void;
+
+    /**
+     * @param array $idAddresses
+     * @param int $idCompanyBusinessUnit
+     *
+     * @return void
+     */
+    public function assignToCompanyBusinessUnit(array $idAddresses, int $idCompanyBusinessUnit): void;
+
+    /**
+     * @param array $idAddresses
+     * @param int $idCompanyBusinessUnit
+     *
+     * @return void
+     */
+    public function unAssignFromCompanyBusinessUnit(array $idAddresses, int $idCompanyBusinessUnit): void;
 }

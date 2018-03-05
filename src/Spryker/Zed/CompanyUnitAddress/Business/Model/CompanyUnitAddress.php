@@ -13,14 +13,17 @@ use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use Spryker\Zed\CompanyUnitAddress\Dependency\Facade\CompanyUnitAddressToCompanyBusinessUnitFacadeInterface;
 use Spryker\Zed\CompanyUnitAddress\Dependency\Facade\CompanyUnitAddressToCountryFacadeInterface;
 use Spryker\Zed\CompanyUnitAddress\Dependency\Facade\CompanyUnitAddressToLocaleFacadeInterface;
-use Spryker\Zed\CompanyUnitAddress\Persistence\CompanyUnitAddressWriterRepositoryInterface;
+use Spryker\Zed\CompanyUnitAddress\Persistence\CompanyUnitAddressEntityManagerInterface;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
-class CompanyUnitAddressWriter implements CompanyUnitAddressWriterInterface
+class CompanyUnitAddress implements CompanyUnitAddressInterface
 {
+    use TransactionTrait;
+
     /**
-     * @var \Spryker\Zed\CompanyUnitAddress\Persistence\CompanyUnitAddressWriterRepositoryInterface
+     * @var \Spryker\Zed\CompanyUnitAddress\Persistence\CompanyUnitAddressEntityManagerInterface
      */
-    protected $companyUnitAddressWriterRepository;
+    protected $entityManager;
 
     /**
      * @var \Spryker\Zed\CompanyUnitAddress\Dependency\Facade\CompanyUnitAddressToCountryFacadeInterface
@@ -43,20 +46,20 @@ class CompanyUnitAddressWriter implements CompanyUnitAddressWriterInterface
     protected $companyUnitAddressPreUpdatePlugins;
 
     /**
-     * @param \Spryker\Zed\CompanyUnitAddress\Persistence\CompanyUnitAddressWriterRepositoryInterface $companyUnitAddressWriterRepository
+     * @param \Spryker\Zed\CompanyUnitAddress\Persistence\CompanyUnitAddressEntityManagerInterface $entityManager
      * @param \Spryker\Zed\CompanyUnitAddress\Dependency\Facade\CompanyUnitAddressToCountryFacadeInterface $countryFacade
      * @param \Spryker\Zed\CompanyUnitAddress\Dependency\Facade\CompanyUnitAddressToLocaleFacadeInterface $localeFacade
      * @param \Spryker\Zed\CompanyUnitAddress\Dependency\Facade\CompanyUnitAddressToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade
      * @param \Spryker\Zed\CompanyUnitAddressExtension\Communication\Plugin\CompanyUnitAddressPreUpdatePluginInterface[] $companyUnitAddressPreUpdatePlugins
      */
     public function __construct(
-        CompanyUnitAddressWriterRepositoryInterface $companyUnitAddressWriterRepository,
+        CompanyUnitAddressEntityManagerInterface $entityManager,
         CompanyUnitAddressToCountryFacadeInterface $countryFacade,
         CompanyUnitAddressToLocaleFacadeInterface $localeFacade,
         CompanyUnitAddressToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade,
         array $companyUnitAddressPreUpdatePlugins
     ) {
-        $this->companyUnitAddressWriterRepository = $companyUnitAddressWriterRepository;
+        $this->entityManager = $entityManager;
         $this->countryFacade = $countryFacade;
         $this->localeFacade = $localeFacade;
         $this->companyBusinessUnitFacade = $companyBusinessUnitFacade;
@@ -70,7 +73,9 @@ class CompanyUnitAddressWriter implements CompanyUnitAddressWriterInterface
      */
     public function create(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressResponseTransfer
     {
-        return $this->save($companyUnitAddressTransfer);
+        return $this->getTransactionHandler()->handleTransaction(function () use ($companyUnitAddressTransfer) {
+            return $this->executeSaveCompanyUnitAddressTransaction($companyUnitAddressTransfer);
+        });
     }
 
     /**
@@ -80,7 +85,9 @@ class CompanyUnitAddressWriter implements CompanyUnitAddressWriterInterface
      */
     public function update(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressResponseTransfer
     {
-        return $this->save($companyUnitAddressTransfer);
+        return $this->getTransactionHandler()->handleTransaction(function () use ($companyUnitAddressTransfer) {
+            return $this->executeSaveCompanyUnitAddressTransaction($companyUnitAddressTransfer);
+        });
     }
 
     /**
@@ -90,27 +97,9 @@ class CompanyUnitAddressWriter implements CompanyUnitAddressWriterInterface
      */
     public function delete(CompanyUnitAddressTransfer $companyUnitAddressTransfer): void
     {
-        $this->companyUnitAddressWriterRepository->delete($companyUnitAddressTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
-     */
-    protected function save(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressResponseTransfer
-    {
-        //TODO: discussion needed. If post update is done, no labels inside
-        $this->executePreUpdatePlugins($companyUnitAddressTransfer);
-
-        $fkCountry = $this->retrieveFkCountry($companyUnitAddressTransfer);
-        $companyUnitAddressTransfer->setFkCountry($fkCountry);
-        $companyUnitAddressTransfer = $this->companyUnitAddressWriterRepository->save($companyUnitAddressTransfer);
-        $companyUnitAddressResponseTransfer = new CompanyUnitAddressResponseTransfer();
-        $companyUnitAddressResponseTransfer->setCompanyUnitAddressTransfer($companyUnitAddressTransfer);
-        $companyUnitAddressResponseTransfer->setIsSuccessful(true);
-
-        return $companyUnitAddressResponseTransfer;
+        $this->getTransactionHandler()->handleTransaction(function () use ($companyUnitAddressTransfer) {
+            $this->executeDeleteCompanyUnitAddressTransaction($companyUnitAddressTransfer);
+        });
     }
 
     /**
@@ -158,15 +147,22 @@ class CompanyUnitAddressWriter implements CompanyUnitAddressWriterInterface
     /**
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
+     * @return void
      */
-    public function createCompanyUnitAddressAndUpdateBusinessUnitDefaultAddresses(
+    protected function updateBusinessUnitDefaultAddresses(
         CompanyUnitAddressTransfer $companyUnitAddressTransfer
-    ): CompanyUnitAddressResponseTransfer {
-        $companyUnitAddressResponseTransfer = $this->create($companyUnitAddressTransfer);
-        $this->updateBusinessUnitDefaultAddresses($companyUnitAddressResponseTransfer->getCompanyUnitAddressTransfer());
+    ): void {
+        $companyUnitAddressTransfer->requireIdCompanyUnitAddress();
 
-        return $companyUnitAddressResponseTransfer;
+        if ($companyUnitAddressTransfer->getFkCompanyBusinessUnit()
+            && $companyUnitAddressTransfer->getIsDefaultBilling()
+        ) {
+            $companyBusinessUnitTransfer = new CompanyBusinessUnitTransfer();
+            $companyBusinessUnitTransfer->setIdCompanyBusinessUnit($companyUnitAddressTransfer->getFkCompanyBusinessUnit())
+                ->setDefaultBillingAddress($companyUnitAddressTransfer->getIdCompanyUnitAddress());
+
+            $this->companyBusinessUnitFacade->update($companyBusinessUnitTransfer);
+        }
     }
 
     /**
@@ -174,13 +170,22 @@ class CompanyUnitAddressWriter implements CompanyUnitAddressWriterInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
      */
-    public function updateCompanyUnitAddressAndBusinessUnitDefaultAddresses(
+    protected function executeSaveCompanyUnitAddressTransaction(
         CompanyUnitAddressTransfer $companyUnitAddressTransfer
     ): CompanyUnitAddressResponseTransfer {
-        $companyUnitAddressResponseTransfer = $this->update($companyUnitAddressTransfer);
-        $this->updateBusinessUnitDefaultAddresses($companyUnitAddressResponseTransfer->getCompanyUnitAddressTransfer());
 
-        return $companyUnitAddressResponseTransfer;
+        //TODO: discussion needed. If post update is done, no labels inside
+        $this->executePreUpdatePlugins($companyUnitAddressTransfer);
+
+        $fkCountry = $this->retrieveFkCountry($companyUnitAddressTransfer);
+        $companyUnitAddressTransfer->setFkCountry($fkCountry);
+        $isDefaultBilling = $companyUnitAddressTransfer->getIsDefaultBilling();
+        $companyUnitAddressTransfer = $this->entityManager->saveCompanyUnitAddress($companyUnitAddressTransfer);
+        $companyUnitAddressTransfer->setIsDefaultBilling($isDefaultBilling);
+        $this->updateBusinessUnitDefaultAddresses($companyUnitAddressTransfer);
+
+        return (new CompanyUnitAddressResponseTransfer())->setIsSuccessful(true)
+            ->setCompanyUnitAddressTransfer($companyUnitAddressTransfer);
     }
 
     /**
@@ -188,19 +193,14 @@ class CompanyUnitAddressWriter implements CompanyUnitAddressWriterInterface
      *
      * @return void
      */
-    protected function updateBusinessUnitDefaultAddresses(
+    protected function executeDeleteCompanyUnitAddressTransaction(
         CompanyUnitAddressTransfer $companyUnitAddressTransfer
     ): void {
         $companyUnitAddressTransfer->requireIdCompanyUnitAddress();
-        $companyUnitAddressTransfer->requireFkCompanyBusinessUnit();
 
-        if ($companyUnitAddressTransfer->getIsDefaultBilling()) {
-            $companyBusinessUnitTransfer = new CompanyBusinessUnitTransfer();
-            $companyBusinessUnitTransfer->setIdCompanyBusinessUnit($companyUnitAddressTransfer->getFkCompanyBusinessUnit())
-                ->setDefaultBillingAddress($companyUnitAddressTransfer->getIdCompanyUnitAddress());
-
-            $this->companyBusinessUnitFacade->update($companyBusinessUnitTransfer);
-        }
+        $this->entityManager->deleteCompanyUnitAddressById(
+            $companyUnitAddressTransfer->getIdCompanyUnitAddress()
+        );
     }
 
     /**
