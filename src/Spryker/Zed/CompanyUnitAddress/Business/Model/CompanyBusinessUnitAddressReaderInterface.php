@@ -55,7 +55,7 @@ interface CompanyBusinessUnitAddressReaderInterface
     public function findCompanyBusinessUnitAddressByUuid(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressResponseTransfer;
 
     /**
-     * @param list<int> $companyBusinessUnitIds
+     * @param array<int> $companyBusinessUnitIds
      *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer
      */

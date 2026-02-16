@@ -80,7 +80,7 @@ class MerchantRelationshipExpander implements MerchantRelationshipExpanderInterf
     /**
      * @param \Generated\Shared\Transfer\MerchantRelationshipCollectionTransfer $merchantRelationshipCollectionTransfer
      *
-     * @return array<int, int>
+     * @return array<int>
      */
     protected function extractCompanyBusinessUnitIds(MerchantRelationshipCollectionTransfer $merchantRelationshipCollectionTransfer): array
     {
