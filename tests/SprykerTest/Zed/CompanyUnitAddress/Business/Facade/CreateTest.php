@@ -29,9 +29,6 @@ class CreateTest extends Unit
      */
     protected CompanyUnitAddressBusinessTester $tester;
 
-    /**
-     * @return void
-     */
     public function testShouldPersistDataToDatabase(): void
     {
         // Arrange

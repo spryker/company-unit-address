@@ -28,9 +28,6 @@ class FindCompanyUnitAddressByIdTest extends Unit
      */
     protected CompanyUnitAddressBusinessTester $tester;
 
-    /**
-     * @return void
-     */
     public function testShouldReturnTransferWhenAddressExists(): void
     {
         // Arrange
@@ -44,9 +41,6 @@ class FindCompanyUnitAddressByIdTest extends Unit
         $this->assertNotNull($companyUnitAddressTransferLoaded);
     }
 
-    /**
-     * @return void
-     */
     public function testShouldReturnNullWhenAddressDoesNotExist(): void
     {
         // Arrange

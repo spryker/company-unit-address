@@ -33,9 +33,6 @@ class UpdateTest extends Unit
      */
     protected CompanyUnitAddressBusinessTester $tester;
 
-    /**
-     * @return void
-     */
     public function testShouldPersistUpdatedDataToDatabase(): void
     {
         // Arrange

@@ -23,20 +23,11 @@ class CompanyUnitAddressMapper implements CompanyUnitAddressMapperInterface
      */
     protected CountryMapper $countryMapper;
 
-    /**
-     * @param \Spryker\Zed\CompanyUnitAddress\Persistence\Propel\Mapper\CountryMapper $countryMapper
-     */
     public function __construct(CountryMapper $countryMapper)
     {
         $this->countryMapper = $countryMapper;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SpyCompanyUnitAddressEntityTransfer $companyUnitAddressEntityTransfer
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
-     */
     public function mapCompanyUnitAddressEntityTransferToCompanyUnitAddressTransfer(
         SpyCompanyUnitAddressEntityTransfer $companyUnitAddressEntityTransfer,
         CompanyUnitAddressTransfer $companyUnitAddressTransfer
@@ -55,11 +46,6 @@ class CompanyUnitAddressMapper implements CompanyUnitAddressMapperInterface
         return $companyUnitAddressTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SpyCompanyUnitAddressEntityTransfer $companyUnitAddressEntityTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer
-     */
     protected function mapCompanyBusinessUnitCollection(
         SpyCompanyUnitAddressEntityTransfer $companyUnitAddressEntityTransfer
     ): CompanyBusinessUnitCollectionTransfer {
@@ -80,12 +66,6 @@ class CompanyUnitAddressMapper implements CompanyUnitAddressMapperInterface
         return $companyBusinessUnitCollectionTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
-     * @param \Generated\Shared\Transfer\SpyCompanyUnitAddressEntityTransfer $companyUnitAddressEntityTransfer
-     *
-     * @return \Generated\Shared\Transfer\SpyCompanyUnitAddressEntityTransfer
-     */
     public function mapCompanyUnitAddressTransferToEntityTransfer(
         CompanyUnitAddressTransfer $companyUnitAddressTransfer,
         SpyCompanyUnitAddressEntityTransfer $companyUnitAddressEntityTransfer
@@ -96,12 +76,6 @@ class CompanyUnitAddressMapper implements CompanyUnitAddressMapperInterface
         );
     }
 
-    /**
-     * @param \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddress $companyUnitAddressEntity
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
-     */
     public function mapCompanyUnitAddressEntityToCompanyUnitAddressTransfer(
         SpyCompanyUnitAddress $companyUnitAddressEntity,
         CompanyUnitAddressTransfer $companyUnitAddressTransfer
@@ -121,12 +95,6 @@ class CompanyUnitAddressMapper implements CompanyUnitAddressMapperInterface
         return $companyUnitAddressTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
-     * @param \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddress $companyUnitAddressEntity
-     *
-     * @return \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddress
-     */
     public function mapCompanyUnitAddressTransferToCompanyUnitAddressEntity(
         CompanyUnitAddressTransfer $companyUnitAddressTransfer,
         SpyCompanyUnitAddress $companyUnitAddressEntity
@@ -166,12 +134,6 @@ class CompanyUnitAddressMapper implements CompanyUnitAddressMapperInterface
         return $companyBusinessUnitIndex;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SpyCompanyBusinessUnitEntityTransfer $companyBusinessUnitEntityTransfer
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
-     */
     public function mapEntityToCompanyBusinessUnitTransfer(
         SpyCompanyBusinessUnitEntityTransfer $companyBusinessUnitEntityTransfer,
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer

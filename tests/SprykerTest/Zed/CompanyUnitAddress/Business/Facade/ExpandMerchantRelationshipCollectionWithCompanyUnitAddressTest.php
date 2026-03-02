@@ -35,9 +35,6 @@ class ExpandMerchantRelationshipCollectionWithCompanyUnitAddressTest extends Uni
      */
     protected CompanyUnitAddressBusinessTester $tester;
 
-    /**
-     * @return void
-     */
     public function testExpandsCollectionWithCorrespondingCompanyUnitAddresses(): void
     {
         // Arrange
@@ -86,9 +83,6 @@ class ExpandMerchantRelationshipCollectionWithCompanyUnitAddressTest extends Uni
         );
     }
 
-    /**
-     * @return void
-     */
     public function testDoesNothingWhenCompanyBusinessUnitDoNotHaveAddresses(): void
     {
         // Arrange
@@ -151,9 +145,6 @@ class ExpandMerchantRelationshipCollectionWithCompanyUnitAddressTest extends Uni
             ->expandMerchantRelationshipCollectionWithCompanyUnitAddress($merchantRelationshipCollectionTransfer);
     }
 
-    /**
-     * @return array
-     */
     protected function throwsExceptionWhenRequiredTransferPropertyIsNotSetDataProvider(): array
     {
         return [

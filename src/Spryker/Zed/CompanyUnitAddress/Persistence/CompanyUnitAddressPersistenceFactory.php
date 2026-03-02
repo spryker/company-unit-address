@@ -22,33 +22,21 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class CompanyUnitAddressPersistenceFactory extends AbstractPersistenceFactory
 {
-    /**
-     * @return \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery
-     */
     public function createCompanyUnitAddressQuery(): SpyCompanyUnitAddressQuery
     {
         return SpyCompanyUnitAddressQuery::create();
     }
 
-    /**
-     * @return \Spryker\Zed\CompanyUnitAddress\Persistence\Propel\Mapper\CompanyUnitAddressMapperInterface
-     */
     public function createCompanyUnitAddressMapper(): CompanyUnitAddressMapperInterface
     {
         return new CompanyUnitAddressMapper($this->createCountryMapper());
     }
 
-    /**
-     * @return \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressToCompanyBusinessUnitQuery
-     */
     public function createCompanyUnitAddressToCompanyBusinessUnitQuery(): SpyCompanyUnitAddressToCompanyBusinessUnitQuery
     {
         return SpyCompanyUnitAddressToCompanyBusinessUnitQuery::create();
     }
 
-    /**
-     * @return \Spryker\Zed\CompanyUnitAddress\Persistence\Propel\Mapper\CountryMapper
-     */
     public function createCountryMapper(): CountryMapper
     {
         return new CountryMapper();

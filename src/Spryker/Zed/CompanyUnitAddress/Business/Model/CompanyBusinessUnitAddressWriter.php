@@ -22,10 +22,6 @@ class CompanyBusinessUnitAddressWriter implements CompanyBusinessUnitAddressWrit
      */
     protected $entityManager;
 
-    /**
-     * @param \Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyBusinessUnitAddressReaderInterface $companyBusinessUnitAddressReader
-     * @param \Spryker\Zed\CompanyUnitAddress\Persistence\CompanyUnitAddressEntityManagerInterface $entityManager
-     */
     public function __construct(
         CompanyBusinessUnitAddressReaderInterface $companyBusinessUnitAddressReader,
         CompanyUnitAddressEntityManagerInterface $entityManager
@@ -34,11 +30,6 @@ class CompanyBusinessUnitAddressWriter implements CompanyBusinessUnitAddressWrit
         $this->entityManager = $entityManager;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
-     *
-     * @return void
-     */
     public function saveCompanyBusinessUnitAddresses(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
     ): void {
@@ -57,12 +48,6 @@ class CompanyBusinessUnitAddressWriter implements CompanyBusinessUnitAddressWrit
         );
     }
 
-    /**
-     * @param array $saveAddresses
-     * @param int $idCompanyBusinessUnit
-     *
-     * @return void
-     */
     protected function assignToCompanyBusinessUnit(
         array $saveAddresses,
         int $idCompanyBusinessUnit
@@ -70,12 +55,6 @@ class CompanyBusinessUnitAddressWriter implements CompanyBusinessUnitAddressWrit
         $this->entityManager->assignToCompanyBusinessUnit($saveAddresses, $idCompanyBusinessUnit);
     }
 
-    /**
-     * @param array $deleteAddresses
-     * @param int $idCompanyBusinessUnit
-     *
-     * @return void
-     */
     protected function unAssignFromCompanyBusinessUnit(
         array $deleteAddresses,
         int $idCompanyBusinessUnit
@@ -83,11 +62,6 @@ class CompanyBusinessUnitAddressWriter implements CompanyBusinessUnitAddressWrit
         $this->entityManager->unAssignFromCompanyBusinessUnit($deleteAddresses, $idCompanyBusinessUnit);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
-     *
-     * @return array
-     */
     protected function getCompanyBusinessUnitAddresses(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
     ): array {
@@ -104,11 +78,6 @@ class CompanyBusinessUnitAddressWriter implements CompanyBusinessUnitAddressWrit
         return $idAddresses;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
-     *
-     * @return array
-     */
     protected function getRequestedCompanyBusinessUnitAddresses(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
     ): array {

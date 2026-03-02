@@ -34,9 +34,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class CompanyUnitAddressBusinessFactory extends AbstractBusinessFactory
 {
-    /**
-     * @return \Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyUnitAddressInterface
-     */
     public function createCompanyUnitAddress(): CompanyUnitAddressInterface
     {
         return new CompanyUnitAddress(
@@ -49,9 +46,6 @@ class CompanyUnitAddressBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyBusinessUnitAddressWriterInterface
-     */
     public function createCompanyBusinessUnitAddressWriter(): CompanyBusinessUnitAddressWriterInterface
     {
         return new CompanyBusinessUnitAddressWriter(
@@ -60,9 +54,6 @@ class CompanyUnitAddressBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyBusinessUnitAddressReaderInterface
-     */
     public function createCompanyBusinessUnitAddressReader(): CompanyBusinessUnitAddressReaderInterface
     {
         return new CompanyBusinessUnitAddressReader(
@@ -71,25 +62,16 @@ class CompanyUnitAddressBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \Spryker\Zed\CompanyUnitAddress\Business\Expander\MerchantRelationshipExpanderInterface
-     */
     public function createMerchantRelationshipExpander(): MerchantRelationshipExpanderInterface
     {
         return new MerchantRelationshipExpander($this->createCompanyBusinessUnitAddressReader());
     }
 
-    /**
-     * @return \Spryker\Zed\CompanyUnitAddress\Business\Expander\MerchantRelationRequestCollectionExpanderInterface
-     */
     public function createMerchantRelationRequestCollectionExpander(): MerchantRelationRequestCollectionExpanderInterface
     {
         return new MerchantRelationRequestCollectionExpander($this->getRepository());
     }
 
-    /**
-     * @return \Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyUnitAddressPluginExecutorInterface
-     */
     protected function createCompanyUnitAddressPluginExecutor(): CompanyUnitAddressPluginExecutorInterface
     {
         return new CompanyUnitAddressPluginExecutor(
@@ -98,25 +80,16 @@ class CompanyUnitAddressBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \Spryker\Zed\CompanyUnitAddress\Dependency\Facade\CompanyUnitAddressToCompanyBusinessUnitFacadeInterface
-     */
     protected function getCompanyBusinessUnitFacade(): CompanyUnitAddressToCompanyBusinessUnitFacadeInterface
     {
         return $this->getProvidedDependency(CompanyUnitAddressDependencyProvider::FACADE_COMPANY_BUSINESS_UNIT);
     }
 
-    /**
-     * @return \Spryker\Zed\CompanyUnitAddress\Dependency\Facade\CompanyUnitAddressToCountryFacadeInterface
-     */
     protected function getCountryFacade(): CompanyUnitAddressToCountryFacadeInterface
     {
         return $this->getProvidedDependency(CompanyUnitAddressDependencyProvider::FACADE_COUNTRY);
     }
 
-    /**
-     * @return \Spryker\Zed\CompanyUnitAddress\Dependency\Facade\CompanyUnitAddressToLocaleFacadeInterface
-     */
     protected function getLocaleFacade(): CompanyUnitAddressToLocaleFacadeInterface
     {
         return $this->getProvidedDependency(CompanyUnitAddressDependencyProvider::FACADE_LOCALE);

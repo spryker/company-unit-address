@@ -30,11 +30,6 @@ class CompanyUnitAddressBusinessTester extends Actor
 {
     use _generated\CompanyUnitAddressBusinessTesterActions;
 
-    /**
-     * @param array $seedData
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer
-     */
     public function createCompanyUnitAddressCollection(array $seedData = []): CompanyUnitAddressCollectionTransfer
     {
         return (new CompanyUnitAddressCollectionTransfer())
@@ -56,11 +51,6 @@ class CompanyUnitAddressBusinessTester extends Actor
         return $companyUnitAddressIds;
     }
 
-    /**
-     * @param int $addressesAmount
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer
-     */
     public function createCompanyUnitAddressesCollection(int $addressesAmount): CompanyUnitAddressCollectionTransfer
     {
         $companyUnitAddressCollectionTransfer = new CompanyUnitAddressCollectionTransfer();
@@ -73,12 +63,6 @@ class CompanyUnitAddressBusinessTester extends Actor
         return $companyUnitAddressCollectionTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer $expectedCompanyUnitAddressCollection
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer $actualCompanyUnitAddressCollection
-     *
-     * @return void
-     */
     public function assertCompanyUnitAddressCollection(
         CompanyUnitAddressCollectionTransfer $expectedCompanyUnitAddressCollection,
         CompanyUnitAddressCollectionTransfer $actualCompanyUnitAddressCollection
@@ -98,12 +82,6 @@ class CompanyUnitAddressBusinessTester extends Actor
         }
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer $companyUnitAddressCollectionTransfer
-     * @param int $idCompanyUnitAddress
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer|null
-     */
     protected function findCompanyUnitAddressTransferById(
         CompanyUnitAddressCollectionTransfer $companyUnitAddressCollectionTransfer,
         int $idCompanyUnitAddress

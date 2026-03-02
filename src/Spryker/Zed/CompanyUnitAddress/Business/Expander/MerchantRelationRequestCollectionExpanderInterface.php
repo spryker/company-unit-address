@@ -11,11 +11,6 @@ use Generated\Shared\Transfer\MerchantRelationRequestCollectionTransfer;
 
 interface MerchantRelationRequestCollectionExpanderInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\MerchantRelationRequestCollectionTransfer $merchantRelationRequestCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantRelationRequestCollectionTransfer
-     */
     public function expandMerchantRelationRequestCollectionWithAssigneeCompanyBusinessUnitAddress(
         MerchantRelationRequestCollectionTransfer $merchantRelationRequestCollectionTransfer
     ): MerchantRelationRequestCollectionTransfer;

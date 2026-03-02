@@ -13,11 +13,6 @@ use Generated\Shared\Transfer\AclEntityParentMetadataTransfer;
 
 class CompanyUnitAddressAclEntityConfigurationExpander implements CompanyUnitAddressAclEntityConfigurationExpanderInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
-     *
-     * @return \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer
-     */
     public function expand(AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer): AclEntityMetadataConfigTransfer
     {
         if (
@@ -42,11 +37,6 @@ class CompanyUnitAddressAclEntityConfigurationExpander implements CompanyUnitAdd
         return $aclEntityMetadataConfigTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
-     *
-     * @return \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer
-     */
     protected function expandForCompanyUnitAddressModelOrNull(
         AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
     ): AclEntityMetadataConfigTransfer {
@@ -66,11 +56,6 @@ class CompanyUnitAddressAclEntityConfigurationExpander implements CompanyUnitAdd
         return $aclEntityMetadataConfigTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
-     *
-     * @return \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer
-     */
     protected function expandForCompanyUnitAddressModel(
         AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
     ): AclEntityMetadataConfigTransfer {
@@ -91,11 +76,6 @@ class CompanyUnitAddressAclEntityConfigurationExpander implements CompanyUnitAdd
         return $aclEntityMetadataConfigTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
-     *
-     * @return \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer
-     */
     protected function expandForCompanyUnitAddressToCompanyBusinessUnitModel(
         AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
     ): AclEntityMetadataConfigTransfer {

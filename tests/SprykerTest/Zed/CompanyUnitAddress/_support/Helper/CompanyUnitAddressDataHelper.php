@@ -33,30 +33,17 @@ class CompanyUnitAddressDataHelper extends Module
         return $companyUnitAddressTransfer;
     }
 
-    /**
-     * @param string $key
-     *
-     * @return void
-     */
     public function ensureCompanyUnitAddressWithKeyDoesNotExist(string $key): void
     {
         $companyUnitAddressQuery = $this->getCompanyUnitAddressQuery();
         $companyUnitAddressQuery->filterByKey($key)->delete();
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
-     *
-     * @return void
-     */
     public function haveCompanyUnitAddressToCompanyBusinessUnitRelation(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): void
     {
         $this->getCompanyUnitAddressFacade()->saveCompanyBusinessUnitAddresses($companyBusinessUnitTransfer);
     }
 
-    /**
-     * @return \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery
-     */
     protected function getCompanyUnitAddressQuery(): SpyCompanyUnitAddressQuery
     {
         return SpyCompanyUnitAddressQuery::create();

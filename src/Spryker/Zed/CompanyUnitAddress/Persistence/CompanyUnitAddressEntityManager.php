@@ -62,12 +62,6 @@ class CompanyUnitAddressEntityManager extends AbstractEntityManager implements C
             ->delete();
     }
 
-    /**
-     * @param array $idAddresses
-     * @param int $idCompanyBusinessUnit
-     *
-     * @return void
-     */
     public function assignToCompanyBusinessUnit(array $idAddresses, int $idCompanyBusinessUnit): void
     {
         foreach ($idAddresses as $idAddress) {
@@ -79,12 +73,6 @@ class CompanyUnitAddressEntityManager extends AbstractEntityManager implements C
         }
     }
 
-    /**
-     * @param array $idAddresses
-     * @param int $idCompanyBusinessUnit
-     *
-     * @return void
-     */
     public function unAssignFromCompanyBusinessUnit(array $idAddresses, int $idCompanyBusinessUnit): void
     {
         if (count($idAddresses) === 0) {
@@ -98,11 +86,6 @@ class CompanyUnitAddressEntityManager extends AbstractEntityManager implements C
             ->delete();
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SpyCompanyUnitAddressToCompanyBusinessUnitEntityTransfer $companyUnitAddressToCompanyBusinessUnitEntityTransfer
-     *
-     * @return void
-     */
     public function saveAddressToBusinessUnitRelation(
         SpyCompanyUnitAddressToCompanyBusinessUnitEntityTransfer $companyUnitAddressToCompanyBusinessUnitEntityTransfer
     ): void {

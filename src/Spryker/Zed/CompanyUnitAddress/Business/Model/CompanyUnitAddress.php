@@ -52,14 +52,6 @@ class CompanyUnitAddress implements CompanyUnitAddressInterface
      */
     protected $companyUnitAddressPluginExecutor;
 
-    /**
-     * @param \Spryker\Zed\CompanyUnitAddress\Persistence\CompanyUnitAddressEntityManagerInterface $entityManager
-     * @param \Spryker\Zed\CompanyUnitAddress\Dependency\Facade\CompanyUnitAddressToCountryFacadeInterface $countryFacade
-     * @param \Spryker\Zed\CompanyUnitAddress\Dependency\Facade\CompanyUnitAddressToLocaleFacadeInterface $localeFacade
-     * @param \Spryker\Zed\CompanyUnitAddress\Dependency\Facade\CompanyUnitAddressToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade
-     * @param \Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyBusinessUnitAddressReaderInterface $companyBusinessUnitAddressReader
-     * @param \Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyUnitAddressPluginExecutorInterface $companyUnitAddressPluginExecutor
-     */
     public function __construct(
         CompanyUnitAddressEntityManagerInterface $entityManager,
         CompanyUnitAddressToCountryFacadeInterface $countryFacade,
@@ -76,11 +68,6 @@ class CompanyUnitAddress implements CompanyUnitAddressInterface
         $this->companyUnitAddressPluginExecutor = $companyUnitAddressPluginExecutor;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
-     */
     public function create(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressResponseTransfer
     {
         return $this->getTransactionHandler()->handleTransaction(function () use ($companyUnitAddressTransfer) {
@@ -88,11 +75,6 @@ class CompanyUnitAddress implements CompanyUnitAddressInterface
         });
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
-     */
     public function update(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressResponseTransfer
     {
         return $this->getTransactionHandler()->handleTransaction(function () use ($companyUnitAddressTransfer) {
@@ -100,11 +82,6 @@ class CompanyUnitAddress implements CompanyUnitAddressInterface
         });
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
-     *
-     * @return void
-     */
     public function delete(CompanyUnitAddressTransfer $companyUnitAddressTransfer): void
     {
         $this->getTransactionHandler()->handleTransaction(function () use ($companyUnitAddressTransfer) {
@@ -112,11 +89,6 @@ class CompanyUnitAddress implements CompanyUnitAddressInterface
         });
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
-     *
-     * @return int
-     */
     protected function retrieveIdCountry(CompanyUnitAddressTransfer $companyUnitAddressTransfer): int
     {
         $idCountry = $companyUnitAddressTransfer->getFkCountry();
@@ -133,9 +105,6 @@ class CompanyUnitAddress implements CompanyUnitAddressInterface
         return $idCountry;
     }
 
-    /**
-     * @return string
-     */
     protected function getIsoCode(): string
     {
         $localeName = $this->localeFacade->getCurrentLocale()
@@ -144,9 +113,6 @@ class CompanyUnitAddress implements CompanyUnitAddressInterface
         return explode('_', $localeName)[1];
     }
 
-    /**
-     * @return int
-     */
     protected function getCompanyCountryId(): int
     {
         $countryTransfer = $this->countryFacade->getCountryByIso2Code($this->getIsoCode());
@@ -154,22 +120,12 @@ class CompanyUnitAddress implements CompanyUnitAddressInterface
         return $countryTransfer->getIdCountry();
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer
-     */
     protected function getCompanyUnitAddressCollectionByIdCompanyBusinessUnit(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
     ): CompanyUnitAddressCollectionTransfer {
         return $this->companyBusinessUnitAddressReader->getCompanyBusinessUnitAddresses($companyBusinessUnitTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
-     *
-     * @return void
-     */
     protected function updateBusinessUnitDefaultAddresses(
         CompanyUnitAddressTransfer $companyUnitAddressTransfer
     ): void {
@@ -191,11 +147,6 @@ class CompanyUnitAddress implements CompanyUnitAddressInterface
         }
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
-     */
     protected function executeSaveCompanyUnitAddressTransaction(
         CompanyUnitAddressTransfer $companyUnitAddressTransfer
     ): CompanyUnitAddressResponseTransfer {
@@ -219,11 +170,6 @@ class CompanyUnitAddress implements CompanyUnitAddressInterface
             ->setCompanyUnitAddressTransfer($companyUnitAddressTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
-     *
-     * @return void
-     */
     protected function executeDeleteCompanyUnitAddressTransaction(
         CompanyUnitAddressTransfer $companyUnitAddressTransfer
     ): void {
@@ -234,12 +180,6 @@ class CompanyUnitAddress implements CompanyUnitAddressInterface
         );
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
-     * @param int $idCompanyUnitAddress
-     *
-     * @return void
-     */
     protected function createAddressToBusinessUnitRelations(
         CompanyUnitAddressTransfer $companyUnitAddressTransfer,
         int $idCompanyUnitAddress

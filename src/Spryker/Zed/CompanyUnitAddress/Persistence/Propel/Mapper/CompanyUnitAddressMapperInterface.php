@@ -13,45 +13,21 @@ use Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddress;
 
 interface CompanyUnitAddressMapperInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\SpyCompanyUnitAddressEntityTransfer $companyUnitAddressEntityTransfer
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
-     */
     public function mapCompanyUnitAddressEntityTransferToCompanyUnitAddressTransfer(
         SpyCompanyUnitAddressEntityTransfer $companyUnitAddressEntityTransfer,
         CompanyUnitAddressTransfer $companyUnitAddressTransfer
     ): CompanyUnitAddressTransfer;
 
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
-     * @param \Generated\Shared\Transfer\SpyCompanyUnitAddressEntityTransfer $companyUnitAddressEntityTransfer
-     *
-     * @return \Generated\Shared\Transfer\SpyCompanyUnitAddressEntityTransfer
-     */
     public function mapCompanyUnitAddressTransferToEntityTransfer(
         CompanyUnitAddressTransfer $companyUnitAddressTransfer,
         SpyCompanyUnitAddressEntityTransfer $companyUnitAddressEntityTransfer
     ): SpyCompanyUnitAddressEntityTransfer;
 
-    /**
-     * @param \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddress $companyUnitAddressEntity
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
-     */
     public function mapCompanyUnitAddressEntityToCompanyUnitAddressTransfer(
         SpyCompanyUnitAddress $companyUnitAddressEntity,
         CompanyUnitAddressTransfer $companyUnitAddressTransfer
     ): CompanyUnitAddressTransfer;
 
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
-     * @param \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddress $companyUnitAddressEntity
-     *
-     * @return \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddress
-     */
     public function mapCompanyUnitAddressTransferToCompanyUnitAddressEntity(
         CompanyUnitAddressTransfer $companyUnitAddressTransfer,
         SpyCompanyUnitAddress $companyUnitAddressEntity

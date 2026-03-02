@@ -21,19 +21,11 @@ class MerchantRelationRequestCollectionExpander implements MerchantRelationReque
      */
     protected CompanyUnitAddressRepositoryInterface $companyUnitAddressRepository;
 
-    /**
-     * @param \Spryker\Zed\CompanyUnitAddress\Persistence\CompanyUnitAddressRepositoryInterface $companyUnitAddressRepository
-     */
     public function __construct(CompanyUnitAddressRepositoryInterface $companyUnitAddressRepository)
     {
         $this->companyUnitAddressRepository = $companyUnitAddressRepository;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\MerchantRelationRequestCollectionTransfer $merchantRelationRequestCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantRelationRequestCollectionTransfer
-     */
     public function expandMerchantRelationRequestCollectionWithAssigneeCompanyBusinessUnitAddress(
         MerchantRelationRequestCollectionTransfer $merchantRelationRequestCollectionTransfer
     ): MerchantRelationRequestCollectionTransfer {

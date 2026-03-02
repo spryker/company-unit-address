@@ -20,9 +20,6 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  */
 class CompanyUnitAddressCommunicationFactory extends AbstractCommunicationFactory
 {
-    /**
-     * @return \Spryker\Zed\CompanyUnitAddress\Communication\Expander\CompanyUnitAddressAclEntityConfigurationExpanderInterface
-     */
     public function createCompanyUnitAddressAclEntityConfigurationExpander(): CompanyUnitAddressAclEntityConfigurationExpanderInterface
     {
         return new CompanyUnitAddressAclEntityConfigurationExpander();

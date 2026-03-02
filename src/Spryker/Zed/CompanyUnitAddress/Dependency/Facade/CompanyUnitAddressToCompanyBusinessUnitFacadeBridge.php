@@ -25,11 +25,6 @@ class CompanyUnitAddressToCompanyBusinessUnitFacadeBridge implements CompanyUnit
         $this->companyBusinessUnitFacade = $companyBusinessUnitFacade;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
-     */
     public function update(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): CompanyBusinessUnitResponseTransfer
     {
         return $this->companyBusinessUnitFacade->update($companyBusinessUnitTransfer);

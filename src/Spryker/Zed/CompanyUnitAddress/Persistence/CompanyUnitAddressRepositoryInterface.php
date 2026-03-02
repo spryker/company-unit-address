@@ -39,11 +39,6 @@ interface CompanyUnitAddressRepositoryInterface
         CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
     ): CompanyUnitAddressCollectionTransfer;
 
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer
-     */
     public function getCompanyBusinessUnitAddressesByCriteriaFilter(
         CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
     ): CompanyUnitAddressCollectionTransfer;
@@ -57,17 +52,7 @@ interface CompanyUnitAddressRepositoryInterface
         array $companyUnitAddressIds
     ): array;
 
-    /**
-     * @param int $idCompanyUnitAddress
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer|null
-     */
     public function findCompanyUnitAddressById(int $idCompanyUnitAddress): ?CompanyUnitAddressTransfer;
 
-    /**
-     * @param string $companyBusinessUnitAddressUuid
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer|null
-     */
     public function findCompanyBusinessUnitAddressByUuid(string $companyBusinessUnitAddressUuid): ?CompanyUnitAddressTransfer;
 }

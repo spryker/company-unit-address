@@ -30,9 +30,6 @@ class SaveCompanyBusinessUnitAddressesTest extends Unit
      */
     protected CompanyUnitAddressBusinessTester $tester;
 
-    /**
-     * @return void
-     */
     public function testShouldSaveNewAddressesAndRemoveStale(): void
     {
         // Arrange

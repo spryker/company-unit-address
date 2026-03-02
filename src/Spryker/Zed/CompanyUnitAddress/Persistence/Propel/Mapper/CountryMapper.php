@@ -12,12 +12,6 @@ use Generated\Shared\Transfer\SpyCountryEntityTransfer;
 
 class CountryMapper
 {
-    /**
-     * @param \Generated\Shared\Transfer\SpyCountryEntityTransfer $countryEntityTransfer
-     * @param \Generated\Shared\Transfer\CountryTransfer $countryTransfer
-     *
-     * @return \Generated\Shared\Transfer\CountryTransfer
-     */
     public function mapCountryEntityTransferToCountryTransfer(
         SpyCountryEntityTransfer $countryEntityTransfer,
         CountryTransfer $countryTransfer

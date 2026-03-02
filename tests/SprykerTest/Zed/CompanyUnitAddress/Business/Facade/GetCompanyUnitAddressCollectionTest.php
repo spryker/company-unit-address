@@ -53,9 +53,6 @@ class GetCompanyUnitAddressCollectionTest extends Unit
      */
     protected CompanyUnitAddressBusinessTester $tester;
 
-    /**
-     * @return void
-     */
     public function testShouldReturnCollectionWhenAssigned(): void
     {
         // Arrange
@@ -77,9 +74,6 @@ class GetCompanyUnitAddressCollectionTest extends Unit
         $this->assertGreaterThan(0, $companyUnitAddressCollectionTransfer->getCompanyUnitAddresses()->count());
     }
 
-    /**
-     * @return void
-     */
     public function testShouldReturnEmptyCollectionWhenNotAssigned(): void
     {
         // Arrange
@@ -98,9 +92,6 @@ class GetCompanyUnitAddressCollectionTest extends Unit
         $this->assertSame(0, $companyUnitAddressCollectionTransfer->getCompanyUnitAddresses()->count());
     }
 
-    /**
-     * @return void
-     */
     public function testShouldReturnPaginatedCollectionWhenPaginationIsSet(): void
     {
         // Arrange
@@ -150,9 +141,6 @@ class GetCompanyUnitAddressCollectionTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     public function testShouldReturnCompanyUnitAddressesWithCountry(): void
     {
         // Arrange
@@ -182,9 +170,6 @@ class GetCompanyUnitAddressCollectionTest extends Unit
         $this->assertSame($countryTransfer->toArray(), $actualCompanyUnitAddressTransfer->getCountryOrFail()->toArray());
     }
 
-    /**
-     * @return void
-     */
     public function testShouldReturnCompanyUnitAddressesByCompanyBusinessUnitIds(): void
     {
         // Arrange

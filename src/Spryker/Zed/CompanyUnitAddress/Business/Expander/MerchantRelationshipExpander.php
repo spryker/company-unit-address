@@ -20,19 +20,11 @@ class MerchantRelationshipExpander implements MerchantRelationshipExpanderInterf
      */
     protected CompanyBusinessUnitAddressReaderInterface $companyBusinessUnitAddressReader;
 
-    /**
-     * @param \Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyBusinessUnitAddressReaderInterface $companyBusinessUnitAddressReader
-     */
     public function __construct(CompanyBusinessUnitAddressReaderInterface $companyBusinessUnitAddressReader)
     {
         $this->companyBusinessUnitAddressReader = $companyBusinessUnitAddressReader;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\MerchantRelationshipCollectionTransfer $merchantRelationshipCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantRelationshipCollectionTransfer
-     */
     public function expandMerchantRelationshipCollectionWithCompanyUnitAddress(
         MerchantRelationshipCollectionTransfer $merchantRelationshipCollectionTransfer
     ): MerchantRelationshipCollectionTransfer {

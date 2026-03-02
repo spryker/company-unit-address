@@ -28,9 +28,6 @@ class DeleteTest extends Unit
      */
     protected CompanyUnitAddressBusinessTester $tester;
 
-    /**
-     * @return void
-     */
     public function testShouldRemoveDataFromPersistence(): void
     {
         // Arrange

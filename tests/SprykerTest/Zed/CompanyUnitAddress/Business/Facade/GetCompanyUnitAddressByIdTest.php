@@ -32,9 +32,6 @@ class GetCompanyUnitAddressByIdTest extends Unit
      */
     protected CompanyUnitAddressBusinessTester $tester;
 
-    /**
-     * @return void
-     */
     public function testShouldReturnCompanyUnitAddressWhenExists(): void
     {
         // Arrange
@@ -56,9 +53,6 @@ class GetCompanyUnitAddressByIdTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     public function testShouldReturnCompanyUnitAddressWithCompanyBusinessUnitWhenMapped(): void
     {
         // Arrange
@@ -95,9 +89,6 @@ class GetCompanyUnitAddressByIdTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     public function testShouldThrowExceptionWhenCompanyUnitAddressDoesNotExist(): void
     {
         // Arrange
@@ -111,9 +102,6 @@ class GetCompanyUnitAddressByIdTest extends Unit
             ->getCompanyUnitAddressById($companyUnitAddressTransfer);
     }
 
-    /**
-     * @return void
-     */
     public function testShouldReturnCompanyUnitAddressWithCountry(): void
     {
         // Arrange

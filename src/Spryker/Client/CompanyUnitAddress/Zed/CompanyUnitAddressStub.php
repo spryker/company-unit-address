@@ -21,19 +21,11 @@ class CompanyUnitAddressStub implements CompanyUnitAddressStubInterface
      */
     protected $zedRequestClient;
 
-    /**
-     * @param \Spryker\Client\CompanyUnitAddress\Dependency\Client\CompanyUnitAddressToZedRequestClientInterface $zedRequestClient
-     */
     public function __construct(CompanyUnitAddressToZedRequestClientInterface $zedRequestClient)
     {
         $this->zedRequestClient = $zedRequestClient;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
-     */
     public function createCompanyUnitAddress(
         CompanyUnitAddressTransfer $companyUnitAddressTransfer
     ): CompanyUnitAddressResponseTransfer {
@@ -43,11 +35,6 @@ class CompanyUnitAddressStub implements CompanyUnitAddressStubInterface
         return $companyUnitAddressResponseTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
-     */
     public function updateCompanyUnitAddress(
         CompanyUnitAddressTransfer $companyUnitAddressTransfer
     ): CompanyUnitAddressResponseTransfer {
@@ -57,11 +44,6 @@ class CompanyUnitAddressStub implements CompanyUnitAddressStubInterface
         return $companyUnitAddressResponseTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
-     */
     public function deleteCompanyUnitAddress(
         CompanyUnitAddressTransfer $companyUnitAddressTransfer
     ): CompanyUnitAddressResponseTransfer {
@@ -71,11 +53,6 @@ class CompanyUnitAddressStub implements CompanyUnitAddressStubInterface
         return $companyUnitAddressResponseTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer
-     */
     public function getCompanyUnitAddressCollection(
         CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
     ): CompanyUnitAddressCollectionTransfer {
@@ -88,11 +65,6 @@ class CompanyUnitAddressStub implements CompanyUnitAddressStubInterface
         return $companyUnitAddressCollectionTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
-     */
     public function getCompanyUnitAddressById(
         CompanyUnitAddressTransfer $companyUnitAddressTransfer
     ): CompanyUnitAddressTransfer {
@@ -102,11 +74,6 @@ class CompanyUnitAddressStub implements CompanyUnitAddressStubInterface
         return $companyUnitAddressTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
-     */
     public function createCompanyUnitAddressAndUpdateBusinessUnitDefaultAddresses(
         CompanyUnitAddressTransfer $companyUnitAddressTransfer
     ): CompanyUnitAddressResponseTransfer {
@@ -119,11 +86,6 @@ class CompanyUnitAddressStub implements CompanyUnitAddressStubInterface
         return $companyUnitAddressResponseTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
-     */
     public function updateCompanyUnitAddressAndBusinessUnitDefaultAddresses(
         CompanyUnitAddressTransfer $companyUnitAddressTransfer
     ): CompanyUnitAddressResponseTransfer {
@@ -136,11 +98,6 @@ class CompanyUnitAddressStub implements CompanyUnitAddressStubInterface
         return $companyUnitAddressResponseTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
-     *
-     * @return void
-     */
     public function saveCompanyBusinessUnitAddresses(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
     ): void {
@@ -150,11 +107,6 @@ class CompanyUnitAddressStub implements CompanyUnitAddressStubInterface
         );
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
-     */
     public function findCompanyBusinessUnitAddressByUuid(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressResponseTransfer
     {
         /** @var \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer $companyUnitAddressResponseTransfer */

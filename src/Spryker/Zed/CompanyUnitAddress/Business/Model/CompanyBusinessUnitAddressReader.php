@@ -26,10 +26,6 @@ class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressRead
      */
     protected $companyUnitAddressPluginExecutor;
 
-    /**
-     * @param \Spryker\Zed\CompanyUnitAddress\Persistence\CompanyUnitAddressRepositoryInterface $repository
-     * @param \Spryker\Zed\CompanyUnitAddress\Business\Model\CompanyUnitAddressPluginExecutorInterface $companyUnitAddressPluginExecutor
-     */
     public function __construct(
         CompanyUnitAddressRepositoryInterface $repository,
         CompanyUnitAddressPluginExecutorInterface $companyUnitAddressPluginExecutor
@@ -38,11 +34,6 @@ class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressRead
         $this->companyUnitAddressPluginExecutor = $companyUnitAddressPluginExecutor;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer
-     */
     public function getCompanyBusinessUnitAddresses(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
     ): CompanyUnitAddressCollectionTransfer {
@@ -54,11 +45,6 @@ class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressRead
         return $this->getCompanyBusinessUnitAddressesByCriteriaFilter($criteriaFilterTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer
-     */
     public function getCompanyBusinessUnitAddressesByCriteriaFilter(
         CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
     ): CompanyUnitAddressCollectionTransfer {
@@ -77,11 +63,6 @@ class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressRead
         return $companyUnitAddressCollectionTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
-     */
     public function getCompanyUnitAddressById(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressTransfer
     {
         $companyUnitAddress = $this->repository->getCompanyUnitAddressById($companyUnitAddressTransfer);
@@ -91,11 +72,6 @@ class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressRead
         return $companyUnitAddress;
     }
 
-    /**
-     * @param int $idCompanyUnitAddress
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer|null
-     */
     public function findCompanyUnitAddressById(int $idCompanyUnitAddress): ?CompanyUnitAddressTransfer
     {
         $companyUnitAddressTransfer = $this->repository->findCompanyUnitAddressById($idCompanyUnitAddress);
@@ -107,11 +83,6 @@ class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressRead
         return $this->companyUnitAddressPluginExecutor->executeCompanyUnitAddressHydratorPlugins($companyUnitAddressTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
-     */
     public function findCompanyBusinessUnitAddressByUuid(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressResponseTransfer
     {
         $companyUnitAddressTransfer->requireUuid();

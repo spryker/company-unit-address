@@ -12,10 +12,5 @@ use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 
 interface CompanyUnitAddressToCompanyBusinessUnitFacadeInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
-     */
     public function update(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): CompanyBusinessUnitResponseTransfer;
 }

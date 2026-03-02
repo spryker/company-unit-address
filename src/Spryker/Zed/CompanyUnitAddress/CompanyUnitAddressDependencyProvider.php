@@ -43,11 +43,6 @@ class CompanyUnitAddressDependencyProvider extends AbstractBundleDependencyProvi
      */
     public const PLUGIN_ADDRESS_TRANSFER_HYDRATING = 'PLUGIN_ADDRESS_TRANSFER_HYDRATING';
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = parent::provideBusinessLayerDependencies($container);
@@ -61,11 +56,6 @@ class CompanyUnitAddressDependencyProvider extends AbstractBundleDependencyProvi
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addCountryFacade(Container $container): Container
     {
         $container->set(static::FACADE_COUNTRY, function (Container $container) {
@@ -75,11 +65,6 @@ class CompanyUnitAddressDependencyProvider extends AbstractBundleDependencyProvi
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addLocaleFacade(Container $container): Container
     {
         $container->set(static::FACADE_LOCALE, function (Container $container) {
@@ -89,11 +74,6 @@ class CompanyUnitAddressDependencyProvider extends AbstractBundleDependencyProvi
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addCompanyBusinessUnitFacade(Container $container): Container
     {
         $container->set(static::FACADE_COMPANY_BUSINESS_UNIT, function (Container $container) {
@@ -103,11 +83,6 @@ class CompanyUnitAddressDependencyProvider extends AbstractBundleDependencyProvi
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addAddressPostUpdatePlugins(Container $container): Container
     {
         $container->set(static::PLUGIN_ADDRESS_POST_SAVE, function (Container $container) {
@@ -117,11 +92,6 @@ class CompanyUnitAddressDependencyProvider extends AbstractBundleDependencyProvi
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addCompanyUnitAddressHydratePlugins(Container $container): Container
     {
         $container->set(static::PLUGIN_ADDRESS_TRANSFER_HYDRATING, function (Container $container) {

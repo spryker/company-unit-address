@@ -33,11 +33,6 @@ class CompanyUnitAddressPluginExecutor implements CompanyUnitAddressPluginExecut
         $this->companyUnitAddressPostSavePlugins = $companyUnitAddressPostSavePlugins;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
-     */
     public function executeCompanyUnitAddressHydratorPlugins(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressTransfer
     {
         foreach ($this->companyUnitAddressHydratePlugins as $plugin) {
@@ -47,11 +42,6 @@ class CompanyUnitAddressPluginExecutor implements CompanyUnitAddressPluginExecut
         return $companyUnitAddressTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
-     */
     public function executePostSavePlugins(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressTransfer
     {
         foreach ($this->companyUnitAddressPostSavePlugins as $plugin) {
