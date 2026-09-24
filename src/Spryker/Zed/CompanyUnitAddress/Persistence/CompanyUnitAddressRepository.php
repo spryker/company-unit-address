@@ -11,6 +11,10 @@ use Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
+use Orm\Zed\Company\Persistence\Map\SpyCompanyTableMap;
+use Orm\Zed\CompanyUnitAddress\Persistence\Map\SpyCompanyUnitAddressTableMap;
+use Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery;
+use Orm\Zed\Country\Persistence\Map\SpyCountryTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -20,6 +24,12 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class CompanyUnitAddressRepository extends AbstractRepository implements CompanyUnitAddressRepositoryInterface
 {
+    /**
+     * The uuid column reaches spy_company_unit_address through a Propel behavior, so the generated
+     * query only gains the filter once the project has run the migration for it.
+     */
+    protected const string ADDRESS_UUID_FILTER_METHOD = 'filterByUuid_In';
+
     /**
      * {@inheritDoc}
      *
@@ -67,6 +77,10 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
                 ->leftJoinWithCompanyBusinessUnit()
             ->endUse();
 
+        if ($criteriaFilterTransfer->getUuids() !== [] && method_exists($query, static::ADDRESS_UUID_FILTER_METHOD)) {
+            $query->filterByUuid_In($criteriaFilterTransfer->getUuids());
+        }
+
         if ($criteriaFilterTransfer->getIdCompany() !== null) {
             $query->filterByFkCompany($criteriaFilterTransfer->getIdCompany());
         }
@@ -102,10 +116,6 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
     /**
      * @module CompanyBusinessUnit
      * @module Country
-     *
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer
      */
     public function getCompanyBusinessUnitAddressesByCriteriaFilter(
         CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
@@ -136,6 +146,16 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
                     ->filterByFkCompanyBusinessUnit_In($criteriaFilterTransfer->getCompanyBusinessUnitIds())
                 ->endUse();
         }
+
+        if (
+            $criteriaFilterTransfer->getUuids() !== []
+            && method_exists($companyUnitAddressQuery, static::ADDRESS_UUID_FILTER_METHOD)
+        ) {
+            $companyUnitAddressQuery->filterByUuid_In($criteriaFilterTransfer->getUuids());
+        }
+
+        $this->applySearchTermToQuery($companyUnitAddressQuery, $criteriaFilterTransfer);
+        $this->applySortToQuery($companyUnitAddressQuery, $criteriaFilterTransfer);
 
         $companyUnitAddressCollection = $this->buildQueryFromCriteria($companyUnitAddressQuery, $criteriaFilterTransfer->getFilter());
         /** @var array<\Generated\Shared\Transfer\SpyCompanyUnitAddressEntityTransfer> $companyUnitAddressEntityTransfers */
@@ -247,6 +267,62 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
                 $companyUnitAddressEntity,
                 new CompanyUnitAddressTransfer(),
             );
+    }
+
+    protected function applySortToQuery(
+        SpyCompanyUnitAddressQuery $companyUnitAddressQuery,
+        CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
+    ): void {
+        $sortableFieldMap = $this->getFactory()->getConfig()->getCompanyUnitAddressCollectionSortableFieldMap();
+
+        foreach ($criteriaFilterTransfer->getSortCollection() as $sortTransfer) {
+            $column = $sortableFieldMap[$sortTransfer->getField()] ?? null;
+
+            if ($column === null) {
+                continue;
+            }
+
+            $companyUnitAddressQuery->orderBy(
+                $column,
+                $sortTransfer->getIsAscending() === false ? Criteria::DESC : Criteria::ASC,
+            );
+        }
+
+        $companyUnitAddressQuery->orderBy(
+            SpyCompanyUnitAddressTableMap::COL_ID_COMPANY_UNIT_ADDRESS,
+            Criteria::DESC,
+        );
+    }
+
+    protected function applySearchTermToQuery(
+        SpyCompanyUnitAddressQuery $companyUnitAddressQuery,
+        CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
+    ): void {
+        $searchTerm = $criteriaFilterTransfer->getSearchTerm();
+
+        if ($searchTerm === null || $searchTerm === '') {
+            return;
+        }
+
+        $companyUnitAddressQuery->joinCompany(null, Criteria::LEFT_JOIN);
+
+        $pattern = sprintf('%%%s%%', mb_strtolower($searchTerm));
+
+        $conditions = [
+            'city' => SpyCompanyUnitAddressTableMap::COL_CITY,
+            'zipCode' => SpyCompanyUnitAddressTableMap::COL_ZIP_CODE,
+            'street' => SpyCompanyUnitAddressTableMap::COL_ADDRESS1,
+            'number' => SpyCompanyUnitAddressTableMap::COL_ADDRESS2,
+            'additionToAddress' => SpyCompanyUnitAddressTableMap::COL_ADDRESS3,
+            'countryName' => SpyCountryTableMap::COL_NAME,
+            'companyName' => SpyCompanyTableMap::COL_NAME,
+        ];
+
+        foreach ($conditions as $name => $column) {
+            $companyUnitAddressQuery->condition($name, sprintf('LOWER(%s) LIKE ?', $column), $pattern);
+        }
+
+        $companyUnitAddressQuery->where(array_keys($conditions), Criteria::LOGICAL_OR);
     }
 
     /**

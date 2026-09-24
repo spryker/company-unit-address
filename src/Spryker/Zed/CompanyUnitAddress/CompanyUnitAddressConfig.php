@@ -7,8 +7,49 @@
 
 namespace Spryker\Zed\CompanyUnitAddress;
 
+use Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer;
+use Orm\Zed\CompanyUnitAddress\Persistence\Map\SpyCompanyUnitAddressTableMap;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CompanyUnitAddressConfig extends AbstractBundleConfig
 {
+    protected const string SORT_FIELD_CITY = 'city';
+
+    protected const string SORT_FIELD_ZIP_CODE = 'zipCode';
+
+    public const string FILTER_FIELD_COMPANY_UUID = 'companyUuid';
+
+    public const string FILTER_FIELD_COMPANY_BUSINESS_UNIT_UUID = 'companyBusinessUnitUuid';
+
+    /**
+     * Specification:
+     * - Returns the map of filterable field names to the criteria filter properties they set.
+     *
+     * @api
+     *
+     * @return array<string, string>
+     */
+    public function getCompanyUnitAddressCollectionFilterableFieldMap(): array
+    {
+        return [
+            static::FILTER_FIELD_COMPANY_UUID => CompanyUnitAddressCriteriaFilterTransfer::ID_COMPANY,
+            static::FILTER_FIELD_COMPANY_BUSINESS_UNIT_UUID => CompanyUnitAddressCriteriaFilterTransfer::ID_COMPANY_BUSINESS_UNIT,
+        ];
+    }
+
+    /**
+     * Specification:
+     * - Returns the map of sortable field names to the columns they order by.
+     *
+     * @api
+     *
+     * @return array<string, string>
+     */
+    public function getCompanyUnitAddressCollectionSortableFieldMap(): array
+    {
+        return [
+            static::SORT_FIELD_CITY => SpyCompanyUnitAddressTableMap::COL_CITY,
+            static::SORT_FIELD_ZIP_CODE => SpyCompanyUnitAddressTableMap::COL_ZIP_CODE,
+        ];
+    }
 }

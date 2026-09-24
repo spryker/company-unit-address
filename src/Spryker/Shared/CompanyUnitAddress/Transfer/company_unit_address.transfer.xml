@@ -40,12 +40,15 @@
     </transfer>
 
     <transfer name="CompanyUnitAddressCriteriaFilter">
+        <property name="uuids" type="string[]" singular="uuid" strict="true"/>
         <property name="idCompany" type="int"/>
         <property name="idCompanyBusinessUnit" type="int"/>
         <property name="companyBusinessUnitIds" type="int[]" singular="idCompanyBusinessUnit" strict="true"/>
         <property name="withCompanyBusinessUnits" type="bool" strict="true"/>
+        <property name="searchTerm" type="string" strict="true"/>
         <property name="filter" type="Filter"/>
         <property name="pagination" type="Pagination"/>
+        <property name="sortCollection" type="Sort[]" singular="sort"/>
     </transfer>
 
     <transfer name="Filter">
@@ -131,5 +134,10 @@
 
     <transfer name="MerchantRelationRequestCollection" strict="true">
         <property name="merchantRelationRequests" type="MerchantRelationRequest[]" singular="merchantRelationRequest"/>
+    </transfer>
+
+    <transfer name="Sort">
+        <property name="field" type="string"/>
+        <property name="isAscending" type="bool"/>
     </transfer>
 </transfers>

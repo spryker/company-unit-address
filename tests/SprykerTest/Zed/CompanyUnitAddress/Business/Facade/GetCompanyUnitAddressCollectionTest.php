@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
+use Generated\Shared\Transfer\SortTransfer;
 use SprykerTest\Zed\CompanyUnitAddress\CompanyUnitAddressBusinessTester;
 
 /**
@@ -212,5 +213,198 @@ class GetCompanyUnitAddressCollectionTest extends Unit
             $companyBusinessUnitTransfer1->getIdCompanyBusinessUnit(),
             $companyBusinessUnitTransferLoaded->getIdCompanyBusinessUnit(),
         );
+    }
+
+    public function testOrdersTheCollectionByASortableFieldAscending(): void
+    {
+        // Arrange
+        $companyTransfer = $this->tester->haveCompany();
+        $this->tester->haveCompanyUnitAddress([
+            CompanyUnitAddressTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
+            CompanyUnitAddressTransfer::CITY => 'Zwolle',
+        ]);
+        $this->tester->haveCompanyUnitAddress([
+            CompanyUnitAddressTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
+            CompanyUnitAddressTransfer::CITY => 'Aachen',
+        ]);
+
+        // Act
+        $companyUnitAddressCollectionTransfer = $this->tester->getFacade()->getCompanyUnitAddressCollection(
+            (new CompanyUnitAddressCriteriaFilterTransfer())
+                ->setIdCompany($companyTransfer->getIdCompany())
+                ->addSort((new SortTransfer())->setField('city')->setIsAscending(true)),
+        );
+
+        // Assert
+        $this->assertSame(
+            ['Aachen', 'Zwolle'],
+            $this->extractCities($companyUnitAddressCollectionTransfer),
+        );
+    }
+
+    public function testOrdersTheCollectionByASortableFieldDescending(): void
+    {
+        // Arrange
+        $companyTransfer = $this->tester->haveCompany();
+        $this->tester->haveCompanyUnitAddress([
+            CompanyUnitAddressTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
+            CompanyUnitAddressTransfer::CITY => 'Aachen',
+        ]);
+        $this->tester->haveCompanyUnitAddress([
+            CompanyUnitAddressTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
+            CompanyUnitAddressTransfer::CITY => 'Zwolle',
+        ]);
+
+        // Act
+        $companyUnitAddressCollectionTransfer = $this->tester->getFacade()->getCompanyUnitAddressCollection(
+            (new CompanyUnitAddressCriteriaFilterTransfer())
+                ->setIdCompany($companyTransfer->getIdCompany())
+                ->addSort((new SortTransfer())->setField('city')->setIsAscending(false)),
+        );
+
+        // Assert
+        $this->assertSame(
+            ['Zwolle', 'Aachen'],
+            $this->extractCities($companyUnitAddressCollectionTransfer),
+        );
+    }
+
+    public function testOrdersTheCollectionByEverySortFieldItWasGiven(): void
+    {
+        // Arrange
+        $companyTransfer = $this->tester->haveCompany();
+        $this->tester->haveCompanyUnitAddress([
+            CompanyUnitAddressTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
+            CompanyUnitAddressTransfer::CITY => 'Aachen',
+            CompanyUnitAddressTransfer::ZIP_CODE => '52070',
+        ]);
+        $this->tester->haveCompanyUnitAddress([
+            CompanyUnitAddressTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
+            CompanyUnitAddressTransfer::CITY => 'Aachen',
+            CompanyUnitAddressTransfer::ZIP_CODE => '52062',
+        ]);
+        $this->tester->haveCompanyUnitAddress([
+            CompanyUnitAddressTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
+            CompanyUnitAddressTransfer::CITY => 'Zwolle',
+            CompanyUnitAddressTransfer::ZIP_CODE => '8011',
+        ]);
+
+        // Act
+        $companyUnitAddressCollectionTransfer = $this->tester->getFacade()->getCompanyUnitAddressCollection(
+            (new CompanyUnitAddressCriteriaFilterTransfer())
+                ->setIdCompany($companyTransfer->getIdCompany())
+                ->addSort((new SortTransfer())->setField('city')->setIsAscending(true))
+                ->addSort((new SortTransfer())->setField('zipCode')->setIsAscending(false)),
+        );
+
+        // Assert
+        $zipCodes = [];
+
+        foreach ($companyUnitAddressCollectionTransfer->getCompanyUnitAddresses() as $companyUnitAddressTransfer) {
+            $zipCodes[] = $companyUnitAddressTransfer->getZipCode();
+        }
+
+        $this->assertSame(['52070', '52062', '8011'], $zipCodes);
+    }
+
+    public function testSortOnANonUniqueColumnStillOrdersTiedRowsDeterministically(): void
+    {
+        // Arrange
+        $companyTransfer = $this->tester->haveCompany();
+        $first = $this->tester->haveCompanyUnitAddress([
+            CompanyUnitAddressTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
+            CompanyUnitAddressTransfer::CITY => 'Aachen',
+        ]);
+        $second = $this->tester->haveCompanyUnitAddress([
+            CompanyUnitAddressTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
+            CompanyUnitAddressTransfer::CITY => 'Aachen',
+        ]);
+
+        // Act
+        $companyUnitAddressCollectionTransfer = $this->tester->getFacade()->getCompanyUnitAddressCollection(
+            (new CompanyUnitAddressCriteriaFilterTransfer())
+                ->setIdCompany($companyTransfer->getIdCompany())
+                ->addSort((new SortTransfer())->setField('city')->setIsAscending(true)),
+        );
+
+        // Assert
+        $this->assertSame(
+            [$second->getIdCompanyUnitAddress(), $first->getIdCompanyUnitAddress()],
+            $this->extractIds($companyUnitAddressCollectionTransfer),
+        );
+    }
+
+    public function testWithoutASortTheMostRecentlyCreatedAddressLeads(): void
+    {
+        // Arrange
+        $companyTransfer = $this->tester->haveCompany();
+        $older = $this->tester->haveCompanyUnitAddress([
+            CompanyUnitAddressTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
+        ]);
+        $newer = $this->tester->haveCompanyUnitAddress([
+            CompanyUnitAddressTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
+        ]);
+
+        // Act
+        $companyUnitAddressCollectionTransfer = $this->tester->getFacade()->getCompanyUnitAddressCollection(
+            (new CompanyUnitAddressCriteriaFilterTransfer())->setIdCompany($companyTransfer->getIdCompany()),
+        );
+
+        // Assert
+        $this->assertSame(
+            [$newer->getIdCompanyUnitAddress(), $older->getIdCompanyUnitAddress()],
+            $this->extractIds($companyUnitAddressCollectionTransfer),
+        );
+    }
+
+    public function testIgnoresASortFieldOutsideTheSortableFieldMap(): void
+    {
+        // Arrange
+        $companyTransfer = $this->tester->haveCompany();
+        $this->tester->haveCompanyUnitAddress([
+            CompanyUnitAddressTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
+        ]);
+
+        // Act
+        $companyUnitAddressCollectionTransfer = $this->tester->getFacade()->getCompanyUnitAddressCollection(
+            (new CompanyUnitAddressCriteriaFilterTransfer())
+                ->setIdCompany($companyTransfer->getIdCompany())
+                ->addSort((new SortTransfer())->setField('spy_company_unit_address.id_company_unit_address; --')),
+        );
+
+        // Assert
+        $this->assertCount(
+            1,
+            $companyUnitAddressCollectionTransfer->getCompanyUnitAddresses(),
+            'A sort field absent from the sortable field map resolves to no column and is skipped.',
+        );
+    }
+
+    /**
+     * @return array<int, int>
+     */
+    protected function extractIds(CompanyUnitAddressCollectionTransfer $companyUnitAddressCollectionTransfer): array
+    {
+        $ids = [];
+
+        foreach ($companyUnitAddressCollectionTransfer->getCompanyUnitAddresses() as $companyUnitAddressTransfer) {
+            $ids[] = $companyUnitAddressTransfer->getIdCompanyUnitAddress();
+        }
+
+        return $ids;
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    protected function extractCities(CompanyUnitAddressCollectionTransfer $companyUnitAddressCollectionTransfer): array
+    {
+        $cities = [];
+
+        foreach ($companyUnitAddressCollectionTransfer->getCompanyUnitAddresses() as $companyUnitAddressTransfer) {
+            $cities[] = $companyUnitAddressTransfer->getCity();
+        }
+
+        return $cities;
     }
 }
