@@ -31,6 +31,11 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
     protected const string ADDRESS_UUID_FILTER_METHOD = 'filterByUuid_In';
 
     /**
+     * @see static::ADDRESS_UUID_FILTER_METHOD
+     */
+    protected const string ADDRESS_SINGLE_UUID_FILTER_METHOD = 'filterByUuid';
+
+    /**
      * {@inheritDoc}
      *
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
@@ -246,9 +251,14 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
      */
     public function findCompanyBusinessUnitAddressByUuid(string $companyBusinessUnitAddressUuid): ?CompanyUnitAddressTransfer
     {
+        $companyUnitAddressQuery = $this->getFactory()->createCompanyUnitAddressQuery();
+
+        if (!method_exists($companyUnitAddressQuery, static::ADDRESS_SINGLE_UUID_FILTER_METHOD)) {
+            return null;
+        }
+
         /** @var \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddress|null $companyUnitAddressEntity */
-        $companyUnitAddressEntity = $this->getFactory()
-            ->createCompanyUnitAddressQuery()
+        $companyUnitAddressEntity = $companyUnitAddressQuery
             ->filterByUuid($companyBusinessUnitAddressUuid)
             ->leftJoinWithCountry()
             ->leftJoinWithCompany()

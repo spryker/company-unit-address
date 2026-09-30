@@ -52,4 +52,18 @@ class CompanyUnitAddressConfig extends AbstractBundleConfig
             static::SORT_FIELD_ZIP_CODE => SpyCompanyUnitAddressTableMap::COL_ZIP_CODE,
         ];
     }
+
+    /**
+     * Specification:
+     * - Returns true if the UUID feature for company unit address entities is enabled.
+     * - When enabled, the uuid column and unique index are added to spy_company_unit_address table.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isUuidEnabled(): bool
+    {
+        return false;
+    }
 }

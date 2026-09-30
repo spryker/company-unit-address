@@ -13,7 +13,6 @@
         <column name="zip_code" size="15" type="VARCHAR" description="The postal code for an address."/>
         <column name="phone" size="255" type="VARCHAR" description="The phone number."/>
         <column name="comment" size="255" type="VARCHAR" description="A user-submitted comment or note."/>
-        <column name="uuid" required="false" type="VARCHAR" size="36" description="A Universally Unique Identifier for an entity."/>
 
         <foreign-key name="spy_company_unit_address-fk_country" foreignTable="spy_country" phpName="Country" refPhpName="CompanyUnitAddress">
             <reference local="fk_country" foreign="id_country"/>
@@ -26,15 +25,6 @@
         </foreign-key>
 
         <id-method-parameter value="spy_company_unit_address_pk_seq"/>
-
-        <unique name="spy_company_unit_address-unique-uuid">
-            <unique-column name="uuid"/>
-        </unique>
-
-        <behavior name="uuid">
-            <parameter name="key_columns" value="id_company_unit_address.fk_company"/>
-        </behavior>
-
     </table>
 
     <table name="spy_company_unit_address_to_company_business_unit" idMethod="native" allowPkInsert="true">
