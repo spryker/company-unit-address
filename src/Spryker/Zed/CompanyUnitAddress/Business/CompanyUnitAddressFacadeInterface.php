@@ -23,6 +23,7 @@ interface CompanyUnitAddressFacadeInterface
      * - Extends returned company unit address transfer with country ISO code.
      * - Extends returned company unit address transfer with country transfer.
      * - Extends returned company unit address transfer with company business unit collection.
+     * - Returns an empty transfer without `idCompanyUnitAddress` when the company unit address is not found.
      *
      * @api
      *

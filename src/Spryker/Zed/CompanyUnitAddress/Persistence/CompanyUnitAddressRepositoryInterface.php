@@ -16,6 +16,7 @@ interface CompanyUnitAddressRepositoryInterface
     /**
      * Specification:
      * - Finds a company unit address by CompanyUnitAddressTransfer::idCompanyUnitAddress in the transfer
+     * - Returns an empty transfer without `idCompanyUnitAddress` when the company unit address is not found.
      *
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
      *

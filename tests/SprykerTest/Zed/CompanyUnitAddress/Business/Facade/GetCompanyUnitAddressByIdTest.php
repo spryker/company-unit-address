@@ -102,6 +102,20 @@ class GetCompanyUnitAddressByIdTest extends Unit
             ->getCompanyUnitAddressById($companyUnitAddressTransfer);
     }
 
+    public function testShouldReturnEmptyCompanyUnitAddressWhenCompanyUnitAddressIsNotFound(): void
+    {
+        // Arrange
+        $companyUnitAddressTransfer = $this->tester->haveCompanyUnitAddress();
+        $this->tester->getFacade()->delete($companyUnitAddressTransfer);
+
+        // Act
+        $companyUnitAddressTransferLoaded = $this->tester->getFacade()->getCompanyUnitAddressById($companyUnitAddressTransfer);
+
+        // Assert
+        $this->assertNull($companyUnitAddressTransferLoaded->getIdCompanyUnitAddress());
+        $this->assertNull($companyUnitAddressTransferLoaded->getFkCompany());
+    }
+
     public function testShouldReturnCompanyUnitAddressWithCountry(): void
     {
         // Arrange

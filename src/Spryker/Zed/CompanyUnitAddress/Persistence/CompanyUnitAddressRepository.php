@@ -57,6 +57,10 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
 
         $companyUnitAddressEntityTransfers = $this->buildQueryFromCriteria($query)->find();
 
+        if (!isset($companyUnitAddressEntityTransfers[0])) {
+            return new CompanyUnitAddressTransfer();
+        }
+
         return $this->getFactory()
             ->createCompanyUnitAddressMapper()
             ->mapCompanyUnitAddressEntityTransferToCompanyUnitAddressTransfer($companyUnitAddressEntityTransfers[0], new CompanyUnitAddressTransfer());
